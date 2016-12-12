@@ -1,0 +1,22 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  cache_directories:
+    - "~/.docker"
+  override:
+    - docker info
+    - docker build --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --build-arg VCS_REF=`git rev-parse --short HEAD` --rm=false -t jkohrman/alpine-ruby-base:latest -t jkohrman/alpine-ruby-base:$(git describe --abbrev=0 --tags) .
+
+test:
+  override:
+    - docker run -i --rm lukasmartinelli/hadolint:latest < Dockerfile
+    - docker run -it --rm jkohrman/alpine-ruby-base:latest --version
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker push jkohrman/alpine-jre8-base
