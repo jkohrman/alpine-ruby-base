@@ -3,6 +3,7 @@
 # alpine-ruby-base  
 A minimal Docker image with Ruby (base)  
   
+Compressed size: 8MB  
 Total image size: 21.27MB  
   
 Currently using `musl` instead of `glibc`.  
