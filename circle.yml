@@ -7,7 +7,7 @@ dependencies:
     - "~/.docker"
   override:
     - docker info
-    - docker build --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --build-arg VCS_REF=`git rev-parse --short HEAD` --rm=false -t jkohrman/alpine-ruby-base:latest -t jkohrman/alpine-ruby-base:$(git describe --abbrev=0 --tags) .
+    - docker build --rm=false -t jkohrman/alpine-ruby-base:latest -t jkohrman/alpine-ruby-base:$(git describe --abbrev=0 --tags) .
 
 test:
   override:
